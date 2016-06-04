@@ -7,11 +7,6 @@ open Dropbox.Api.Files
 
 let private chunkSize = 256 * 1024
 
-let private readChunk size (s:FileStream) =
-    let buffer = Array.zeroCreate<byte> size
-    let readCount = s.Read(buffer, 0, size)
-    readCount, buffer
-
 let uploadToDropbox token filePath (remoteFilePath:string) = 
     async { 
         use client = new DropboxClient(token)
@@ -19,11 +14,12 @@ let uploadToDropbox token filePath (remoteFilePath:string) =
         let fileSize = fileStream.Length
         let chunksCount = float fileSize / float chunkSize |> Math.Ceiling |> int
         let commitInfo = remoteFilePath |> CommitInfo
+        let buffer = Array.zeroCreate<byte> chunkSize
         let mutable sessionId = ""
 
         for chunkNumber in 1 .. chunksCount do
-            let readCount, readData = readChunk chunkSize fileStream
-            use readDataStream = new MemoryStream(readData, 0, readCount)
+            let readCount = fileStream.Read(buffer, 0, chunkSize)
+            use readDataStream = new MemoryStream(buffer, 0, readCount)
             match chunkNumber with
             | 1 ->
                 let! session = client.Files.UploadSessionStartAsync(body = readDataStream) |> Async.AwaitTask

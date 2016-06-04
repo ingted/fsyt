@@ -1,0 +1,25 @@
+type project
+title
+    fsyt
+owners
+    cy
+authors 
+    cy
+projectUrl
+    http://github.com/[github-user]/fsyt
+iconUrl
+    https://raw.githubusercontent.com/[github-user]/fsyt/master/docs/files/img/logo.png
+licenseUrl
+    http://github.com/[github-user]/fsyt/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2015
+tags
+    youtube mp3 onedrive fsharp
+summary
+    Delivers mp3 from YouTube to OneDrive
+description
+    Gets mp3 from YouTube using youtube-dl and uploads it to OneDrive
+
+

@@ -1,0 +1,13 @@
+source https://nuget.org/api/v2
+
+nuget FSharp.Core redirects: force
+nuget Dropbox.Api 
+
+group Build
+  source https://nuget.org/api/v2
+  
+  nuget SourceLink.Fake
+  nuget FAKE
+  nuget FSharp.Formatting
+
+  github fsharp/FAKE modules/Octokit/Octokit.fsx
